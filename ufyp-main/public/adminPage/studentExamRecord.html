@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <script src="../js/scripts.js"></script>
+  <link href="../lib/DataTables/datatables.min.css" rel="stylesheet"/>
+  <script src="../js/studentExamRecord.js"></script>
+  <script type="module" src="../js/User.js"></script> 
+  <link rel="stylesheet" href="../css/studentExamRecord.css">
+  <link href="../lib/fontawesome-free-5.15.4-web/css/all.css" rel="stylesheet">
+  <script src="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.css">
+  <script src="../lib/chart.js/package/dist/chart.umd.js"></script>
+  <script src="../lib/chart.js/chartjs-plugin-labels.min.js"></script>
+  <script src="../lib/chart.js/chartjs-plugin-outlables.js"></script>
+  <script src="../lib/chart.js/chartjs-plugin-datalabels.min.js"></script>
+</head>
+<body>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-2 text-light sidebar">
+        <!-- <h2>Admin Panel</h2> -->
+        <div id="navigation">
+          
+        </div>
+      </div> 
+
+      <!-- Content Area -->
+      <div class="col-10 bgcolor">
+
+        <div class="content">
+            <div class="container-fluid">
+                <h1>Student Exam Record</h1>
+                <div class="row">
+
+                    <div class="col-3"  id="academicYearSelectDiv">
+                      <label for="academicYearSelect">Academic Year:</label>
+                      <select class="form-select academicYearSelector" id="academicYearSelect">
+                          
+                      </select>       
+                    </div>
+                    <div class="col-3 classYear" id="classYearDiv" style="display: none;">
+                      <label for="classSelect">Class:</label>
+                      <select class="form-select" id="classSelect">
+                          
+                      </select>
+                    </div>
+
+                    <div class="col-3 termSelectorDiv" id="termSelectorDiv" style="display: none;">
+                      <div>
+                        <label for="termSelect">Term:</label>
+                        <select class="form-select" id="termSelect">
+                            <option value="" selected disabled>Select Term</option>
+                            <option value="firstHalfTerm">First Half Term</option>
+                            <option value="secondHalfTerm">Second Half Term</option>
+                        </select>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="input-group" id="searchStudentIdDiv" style="display: none;">
+                            <input type="search" class="form-control" id="searchStudentId" placeholder="Enter student ID">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="searchButton" onclick="searchAttendance()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                  <div class="col" id="recordTabDiv" style="display: none;">
+                    <ul class="nav nav-tabs attendanceTabs" id="attendanceTabs" role="tablist">
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="studentExamRecord-tab" data-bs-toggle="tab" data-bs-target="#studentExamRecord" type="button" role="tab" aria-controls="studentExamRecord" aria-selected="true">Student Exam record</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="studentExamRecordRate-tab" data-bs-toggle="tab" data-bs-target="#studentExamRecordRate" type="button" role="tab" aria-controls="studentExamRecordRate" aria-selected="false">Student Exam rate</button>
+                      </li>
+                    </ul>
+                    <div class="tab-content mt-4">
+                      
+                      <div class="tab-pane fade show active" id="studentExamRecord" role="tabpanel" aria-labelledby="studentExamRecord-tab">
+                        <div class="searchTableDiv" id="searchTableDiv">
+                          <table id="searchTable" class="table table-striped">
+                            <!-- Table headers -->
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="tab-pane fade" id="studentExamRecordRate" role="tabpanel" aria-labelledby="studentExamRecordRate-tab">
+                        <div class="searchStudentExamRecordRateDiv" id="searchStudentExamRecordRateDiv">
+                          <div class="row">
+                            <div class="col-5 searchStudentExamRecordInfo" id="searchStudentExamRecordInfo">
+
+                            </div>
+                            <div class="col-6 searchStudentExamChart" id="searchStudentExamChart">
+                              <div class="row">
+                                <canvas id="studentExamRecordHighestChart" class="studentExamRecordHighestChart">
+
+                                </canvas>
+                                <canvas id="studentExamRecordMeanChart" class="studentExamRecordMeanChart">
+
+                                </canvas>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+
+      // Fetch the navigation HTML file
+      fetch('navigation.html')
+        .then(response => response.text())
+        .then(html => {
+          // Inject the navigation HTML into the navigation element
+          document.getElementById('navigation').innerHTML = html;
+
+          // Select the elements with the class "arrow"
+          let arrows = document.querySelectorAll('.arrow');
+  
+          // Add click event listener to toggle the menu
+          for (var i = 0; i < arrows.length; i++) {
+            arrows[i].addEventListener('click', (e) => {
+              let arrowParent = e.target.parentElement.parentElement; // Selecting the main parent of arrow
+              arrowParent.classList.toggle('showMenu');
+            });
+          }
+        });
+    });
+
+    $(document).ready(function() {
+        initializeDataTable();
+        fetchYearAndClass();
+        eventListenerSetting();
+        resetData();
+    });
+
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+.content .tab-content .dataTables_filter{
+    float: none;
+    text-align: none;
+    margin: 10px;
+}
+
+.content .tab-content .dataTables_filter label{
+    float: left;
+    text-align: none;
+}
+
+
+.addStudentsButton{
+    float: right;
+    text-align: right;
+}
+
+.form-group{
+    padding-bottom: 5px;
+}
+
+.moveRight{
+    margin-left: 6px;
+}
+
+i.fas.fa-play {
+    color: white;
+ }
+ 
+
+ #leaveTeachersTable th{
+    width: auto !important
+
+ }
+
+ #inWorkTeachersTable th{
+    width: auto !important;
+ }
+
+ #allTeachersTable{
+    width: 100% !important
+
+ }

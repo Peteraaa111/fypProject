@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <script src="../js/scripts.js"></script>
+  <script src="../js/classHomeWork.js"></script>
+  <link href="../lib/DataTables/datatables.min.css" rel="stylesheet"/>
+  <script src="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="../lib/datePicker/datepicker.min.css">
+  <script src="../lib/datePicker/datepicker-full.min.js"></script>
+  <link rel="stylesheet" href="/css/manageClassHomework.css">
+  <script type="module" src="../js/User.js"></script>
+</head>
+<body>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-2 text-light sidebar">
+        <div id="navigation">
+          
+        </div>
+      </div> 
+
+      <!-- Content Area -->
+      <div class="col-10 bgcolor">
+        <div class="content">
+          <!-- Academic Year Select Box -->
+          <div class="container-fluid">
+            <h1>Manage Class Homework</h1>
+
+            <div class="row academicYear">
+              <div class="col">
+                <label for="yearSelector">Academic Year:</label>
+                <select class="form-select" id="yearSelector">
+                  <!-- Options will be dynamically populated -->
+                </select>       
+              </div>
+            </div>
+
+            <!-- Class Select Box -->
+            <div class="row classYear" id="classYearDiv" style="display: none;">
+              <div class="col-11">
+                <label for="classSelect">Class:</label>
+                <select class="form-select" id="classSelect">
+                  <option value="" selected disabled hidden>Select class</option>
+                  <option value="1A">1A</option>
+                  <option value="1B">1B</option>
+                  <option value="2A">2A</option>
+                  <option value="2B">2B</option>
+                  <option value="3A">3A</option>
+                  <option value="3B">3B</option>
+                  <option value="4A">4A</option>
+                  <option value="4B">4B</option>
+                  <option value="5A">5A</option>
+                  <option value="5B">5B</option>
+                  <option value="6A">6A</option>
+                  <option value="6B">6B</option>
+                </select>
+              </div>
+              <div class="col-1" id="buttonAddHomeWorkDiv" style="margin-top:auto; display:none">
+                <button class="btn btn-success btn-circle" id="sendIamge" style="float:right;" data-bs-toggle='modal' data-bs-target=#addImageModal>
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="classHomeWorkTableDiv">
+              <table id="classHomeWorkTable" class="table table-striped table-bordered">
+                  <!-- Table headers -->
+              </table>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- add image Modal-->
+  <div class="modal fade" id="addImageModal" tabindex="-1" aria-labelledby="addImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addImageModalLabel">Select Homework Image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+
+            <div class="mb-3">
+              <label for="activityDate">Attendance Date</label>
+              <input type="text" class="form-select datetimepicker-input" id="activityDate" data-toggle="datetimepicker" data-target="#activityDate" placeholder="Select activity date">
+            </div>
+
+            <div class="mb-3">
+              <label for="studentFileInput" class="form-label">Upload a image</label>
+              <form id="uploadFileForm" >
+                <input type="file" class="form-control" id="ImageFileInput" accept=".jpg,.jpeg,.png,.gif">
+              </form>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="uploadFileButton" onclick="sendImage()">Upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Edit homework Modal -->
+    <div class="modal fade" id="editHomeworkModal" tabindex="-1" aria-labelledby="editHomeworkModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editHomeworkModalLabel">Edit Homework</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="editHomeworkForm">
+              <div class="form-group" hidden>
+                <label for="date">date</label>
+                <input type="text" class="form-control" id="date" name="date" required>
+              </div>
+              <div class="form-group">
+                <label for="chineseHomework">Chinese:</label>
+                <input type="text" class="form-control" id="chineseHomework" name="chineseHomework" required>
+              </div>
+              <div class="form-group">
+                <label for="englishHomework">English:</label>
+                <input type="text" class="form-control" id="englishHomework" name="englishHomework" required>
+              </div>
+              <div class="form-group">
+                <label for="mathematicsHomework">Mathematics:</label>
+                <input type="text" class="form-control" id="mathematicsHomework" name="mathematicsHomework" required>
+              </div>
+              <div class="form-group">
+                <label for="generalStuidesHomework">General Stuides:</label>
+                <input type="text" class="form-control" id="generalStuidesHomework" name="generalStuidesHomework" required>
+              </div>
+              <div class="form-group">
+                <label for="other">Other:</label>
+                <input type="text" class="form-control" id="other" name="other" required>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="editHomeworkButton" onclick="editHomework()">Edit Homework</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fetch the navigation HTML file
+      fetch('navigation.html')
+        .then(response => response.text())
+        .then(html => {
+          // Inject the navigation HTML into the navigation element
+          document.getElementById('navigation').innerHTML = html;
+  
+          // Select the elements with the class "arrow"
+          let arrows = document.querySelectorAll('.arrow');
+          
+          // Add click event listener to toggle the menu
+          for (var i = 0; i < arrows.length; i++) {
+            arrows[i].addEventListener('click', (e) => {
+              let arrowParent = e.target.parentElement.parentElement; // Selecting the main parent of arrow
+              arrowParent.classList.toggle('showMenu');
+            });
+          }
+        });
+    });
+
+    $(document).ready(function() {
+      reset();
+      initializeDataTable();
+      populateYearSelector();
+      setDatePicker();
+      fetchHomeWorkReady();
+    });
+
+  </script>
+  
+
+</body>
+
+</html>

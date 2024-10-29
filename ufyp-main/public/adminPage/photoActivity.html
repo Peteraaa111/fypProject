@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Admin Panel</title>
+  <script src="../js/scripts.js"></script>
+  <link href="../lib/DataTables/datatables.min.css" rel="stylesheet"/>
+  <link href="../lib/filepond-master/fliepond/filepond.css" rel="stylesheet"/>
+  <link href="../lib/filepond-master/fliepond/filepond-plugin-image-preview.css" rel="stylesheet"/>
+ 
+  <script type="module" src="../js/User.js"></script>
+  <script src="../lib/filepond-master/fliepond/filepond.js"></script>
+  <script src="../lib/filepond-master/fliepond/filepond-plugin-image-preview.js"></script>
+  <script src="../lib/filepond-master/fliepond/filepond-plugin-file-validate-size.js"></script>
+  <script src="../lib/filepond-master/fliepond/filepond-plugin-file-encode.js"></script>
+  <script src="../lib/filepond-master/fliepond/filepond-plugin-image-exif-orientation.js"></script>
+
+  <script src="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.js"></script>
+
+
+
+  <link rel="stylesheet" href="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="../lib/datePicker/datepicker.min.css">
+  <script src="../lib/datePicker/datepicker-full.min.js"></script>
+  <link rel="stylesheet" href="/css/photoActivity.css">
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.3/dist/css/datepicker.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.3/dist/js/datepicker-full.min.js"></script> -->
+  <script src="../js/photoActivity.js"></script>
+</head>
+<body>
+  
+  <div class="container-fluid">
+
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-2 text-light sidebar">
+        <!-- <h2>Admin Panel</h2> -->
+        <div id="navigation">
+          
+        </div>
+      </div> 
+
+      <!-- Content Area -->
+      <div class="col-10 bgcolor">
+
+        <div class="content">
+          <!-- Academic Year Select Box -->
+          <div class="container-fluid">
+            <div class="row">
+              <h1>Photo Activity</h1>
+            </div>
+            <div class="row yearSelectorDiv">
+              <div class="col">
+                <label for="yearSelector">Year:</label>
+                <select class="form-select" id="yearSelector">
+                  
+                </select>       
+              </div>
+            </div>
+
+            <div class="monthPhotoTableDiv" id="monthPhotoTableDiv">
+              <table id="monthPhotoTable" class="table table-striped table-bordered">
+                <!-- Table headers -->
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="photoActivityModal" tabindex="-1" aria-labelledby="photoActivityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="photoActivityModalLabel">Photo Activity</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <button class="btn btn-success btn-circle" id="addActivityButton" title="add Activity"><i class="fas fa-plus"></i></button>
+          <table id="photoActivityTable" class="table table-striped cell-border">
+            
+          </table>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary" id="addStudentGradeButton" onclick="setGradeToStduent()">Set Grade To Student</button> -->
+        </div>
+      </div>
+    </div>
+  </div> 
+
+
+  <div class="modal fade" id="photoActivityImageModal" tabindex="-1" aria-labelledby="photoActivityImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="photoActivityImageModalLabel">Photo Activity Image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- <button type="button" class="btn btn-primary">Add Image</button> -->
+          <table id="photoActivityImageTable" class="table table-striped cell-border">
+            
+          </table>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary" id="addStudentGradeButton" onclick="setGradeToStduent()">Set Grade To Student</button> -->
+        </div>
+      </div>
+    </div>
+  </div> 
+
+  <div class="modal fade" id="addIamgeModal" tabindex="-1" aria-labelledby="addIamgeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addIamgeModalLabel">Add image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id ="imageForm" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="imageFileInput" class="form-label">Upload Image</label>
+              <input type="file" 
+              class="filepond"
+              name="filepond"
+              id = "imageFileInput"
+              accept="image/png, image/jpeg, image/gif"
+              multiple/>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="uploadFileButton">Upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editIamgeModal" tabindex="-1" aria-labelledby="editIamgeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editIamgeModalLabel">Edit image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id ="editImageForm" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="editImageFileInput" class="form-label">Upload Image</label>
+              <input type="file" 
+              class="filepond2"
+              name="filepond2"
+              id = "editImageFileInput"
+              accept="image/png, image/jpeg, image/gif"/>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="editUploadFileButton">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Activity Modal -->
+  <div class="modal fade" id="addActivityModal" tabindex="-1" aria-labelledby="addActivityModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addActivityModalLabel">Add Activity</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="addActivityForm">
+            <div class="mb-3">
+              <label for="activityName" class="form-label">Activity Name</label>
+              <input type="text" class="form-control" id="activityName" placeholder="Enter activity name">
+            </div>
+            <div class="mb-3">
+              <label for="activityDate" class="form-label">Activity Date</label>
+              <input type="text" class="form-control datetimepicker-input" id="activityDate" data-toggle="datetimepicker" data-target="#activityDate" placeholder="Select activity date">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="addAcitivity()">Add Acitivity</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fetch the navigation HTML file
+      fetch('navigation.html')
+        .then(response => response.text())
+        .then(html => {
+          // Inject the navigation HTML into the navigation element
+          document.getElementById('navigation').innerHTML = html;
+
+          // Select the elements with the class "arrow"
+          let arrows = document.querySelectorAll('.arrow');
+  
+          // Add click event listener to toggle the menu
+          for (var i = 0; i < arrows.length; i++) {
+            arrows[i].addEventListener('click', (e) => {
+              let arrowParent = e.target.parentElement.parentElement; // Selecting the main parent of arrow
+              arrowParent.classList.toggle('showMenu');
+            });
+          }
+        });
+    });
+
+    const addImageModal = document.getElementById('addIamgeModal');
+    const addActivityModal = document.getElementById('addActivityModal');
+    const fileInput = document.getElementById('imageFileInput');
+    const editImageFileInput = document.getElementById('editImageFileInput');
+    const imageForm = document.getElementById('imageForm');
+    const addActivityForm = document.getElementById('addActivityForm');
+    addActivityForm.reset();
+    imageForm.reset();
+    addImageModal.addEventListener('hidden.bs.modal', () => {
+      imageForm.reset();
+      fileInput.value = '';
+    });
+
+    addActivityModal.addEventListener('hidden.bs.modal', () => {
+      addActivityForm.reset();
+    });
+
+    const addActivityButton = document.getElementById('addActivityButton');
+    addActivityButton.onclick = function() {
+      $('#addActivityModal').modal('show');
+    };
+    
+
+    function saveFunction(){
+      const activityDate = document.getElementById("activityDate");
+      const activityDateValue = activityDate.value;
+      console.log(activityDateValue);
+    }
+
+ 
+    FilePond.registerPlugin(
+      FilePondPluginImagePreview,
+      FilePondPluginImageExifOrientation,
+      FilePondPluginFileValidateSize,
+    );
+
+    const pond = FilePond.create(fileInput, {
+      allowMultiple: true,
+      imagePreviewHeight: 150,
+      imageCropAspectRatio: '1:1',
+      storeAsFile: true,
+    });
+
+
+
+    $(document).ready(function() {
+      initializeDataTable();
+      populateYearSelector();
+    });
+
+  </script>
+  
+
+</body>
+
+</html>

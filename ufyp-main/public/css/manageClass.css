@@ -1,0 +1,38 @@
+.studentsTableDiv{
+    padding: 20px 0 0 0;
+}
+
+.classYear{
+    padding: 15px 0 0 0;
+}
+
+.content .form-select{
+    width: 25% !important;
+}
+
+.twoButtonDiv{
+    margin-bottom: 40px;
+}
+
+.resizeNumber{
+    margin-right: 20px;
+}
+
+.selected-row {
+    background-color: #18df18 !important;
+}
+
+.btn-circle {
+    border-radius: 100%;
+    height: 2.5rem;
+    width: 2.5rem;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn_center {
+    margin: auto;
+    display: block;
+}

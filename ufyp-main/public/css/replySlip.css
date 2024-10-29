@@ -1,0 +1,61 @@
+.replySlipTableDiv{
+    margin-top: 30px;
+}
+
+.addReplySlipDiv{
+    margin-top: 15px !important;
+}
+
+.tox-promotion{
+    display: none;
+}
+
+.tox-statusbar__branding{
+    display: none;
+}
+
+.recipientCard{
+    margin-top: 20px;
+}
+
+.removeReplySlip{
+    margin-left: 10px;
+}
+
+.distributeReplySlip{
+    margin-left: 10px;
+}
+
+.showDetail{
+    cursor:pointer;
+}
+
+.read{
+    background-color: rgb(172, 255, 216) !important;
+}
+
+.subbmited{
+    background-color: rgb(172, 255, 216)!important;
+}
+
+.notsubmit{
+    background-color: rgb(222, 226, 230) !important;
+}
+
+.notRead{
+    background-color: rgb(222, 226, 230) !important;
+}
+
+.vscomp-wrapper.has-error .vscomp-toggle-button{
+    border-color: #e74a3b !important;
+  }
+
+.vscomp-wrapper.show-value-as-tags .vscomp-toggle-button {
+    border-color: #1cc88a ;
+}
+
+#replySlipTable th{
+    width: auto !important
+
+}
+

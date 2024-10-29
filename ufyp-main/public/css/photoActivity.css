@@ -1,0 +1,45 @@
+.monthPhotoTableDiv{
+    margin-top: 30px;
+}
+
+#photoActivityTable{
+    padding-top: 20px;
+}
+
+#photoActivityImageTable{
+    padding-top: 20px;
+}
+
+.addImageButton{
+    float: right;
+}
+
+#imageForm .filepond--list li{
+    width: 220px;
+}
+
+#imageForm .filepond--image-preview-wrapper{
+    width: 220px;
+}/*  */
+
+.filepond--credits {
+    display: none;
+}
+
+#addActivityButton{
+    float: right;
+    margin-bottom: 20px;
+}
+
+#addActivityModal{
+    margin-top: 50px;
+}
+
+#editImageFileInput{
+    height: 300px !important;
+    margin-right: 340px;
+}
+
+#editImageForm .filepond--item{
+    margin-top: 20px;
+}

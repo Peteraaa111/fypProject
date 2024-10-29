@@ -1,0 +1,34 @@
+.student-exam-record-table{
+    border-collapse: separate; 
+    border-spacing: 1em;
+}
+
+
+/* .searchStudentExamRecordRateDiv{
+    border: 1px solid;
+} */
+
+.searchStudentExamRecordInfo{
+    margin-left:11px;
+    border: 1px solid black;
+}
+
+.searchStudentExamChart{
+    border: 1px solid;
+}
+
+.searchStudentExamChart{
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-left: 1px solid;
+}
+
+.studentExamRecordHighestChart{
+    width: 750px !important;
+    height: 295px !important;
+}
+
+.studentExamRecordMeanChart{
+    width: 750px !important;
+    height: 295px !important;
+}

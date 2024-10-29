@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <script src="../js/scripts.js"></script>
+  <script src="../js/manageClassDistribute.js"></script>
+  <link href="../lib/DataTables/datatables.min.css" rel="stylesheet"/>
+  <link href="../css/manageClassDistribute.css" rel="stylesheet"/>
+  <script type="module" src="../js/User.js"></script> 
+  <script src="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.js"></script>
+
+  <link rel="stylesheet" href="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.css">
+</head>
+<body>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-2 text-light sidebar">
+        <div id="navigation">
+          
+        </div>
+      </div> 
+
+      <!-- Content Area -->
+      <div class="col-10 bgcolor">
+
+        <div class="content">
+          <div class="container-fluid">
+            <h1>Class Distribute</h1>
+            <div class="row">
+              <div class="col-3 Year" id="YearDiv">
+                <label for="yearSelect">Year:</label>
+                <select class="form-select" id="yearSelect">
+
+                </select>
+              </div>
+
+              <div class="col">
+                <button type="button" class="btn btn-primary" id="autoDistributeClass" style="display: none; float:right; margin-top:20px;">Distribute Next Year Class</button>
+              </div>
+
+
+            </div>
+
+
+
+            <div class="row mt-4 studentTableDiv" style="display: none;" id="studentTableDiv">
+              
+              <table id="studentTable" class="table table-striped">
+                <!-- Table headers -->
+              </table>
+              
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+
+      // Fetch the navigation HTML file
+      fetch('navigation.html')
+        .then(response => response.text())
+        .then(html => {
+          // Inject the navigation HTML into the navigation element
+          document.getElementById('navigation').innerHTML = html;
+
+          // Select the elements with the class "arrow"
+          let arrows = document.querySelectorAll('.arrow');
+  
+          // Add click event listener to toggle the menu
+          for (var i = 0; i < arrows.length; i++) {
+            arrows[i].addEventListener('click', (e) => {
+              let arrowParent = e.target.parentElement.parentElement; // Selecting the main parent of arrow
+              arrowParent.classList.toggle('showMenu');
+            });
+          }
+        });
+    });
+
+    
+    $(document).ready(function() {
+        initializeDataTable();
+        fetchReady();
+        makeSelectOption();
+        //fetchCurrentYearClass();
+    });
+
+
+
+  </script>
+  
+
+</body>
+
+</html>

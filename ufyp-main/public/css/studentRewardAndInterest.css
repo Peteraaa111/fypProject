@@ -1,0 +1,125 @@
+.cardColor{
+    background-color: #f3f3f3;
+}
+
+#studentActivityTable_wrapper{
+    padding:20px;
+}
+
+#studentRewardTable_wrapper{
+    padding: 20px 20px 20px 20px;
+}
+
+.studentRewardTable{
+    padding-top: 20px;
+}
+
+.studentActivityTable{
+    padding-top: 20px;
+}
+
+.btn-circle {
+    border-radius: 100%;
+    height: 2.5rem;
+    width: 2.5rem;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.applyRewardBtn{
+    float: right;
+    margin-left: 20px;
+}
+
+.applyStudentActivityBtn{
+    float: right;
+    margin-left: 20px;
+}
+
+.applyRewardToStudentTable{
+    width: 100%;
+}
+
+.applyInterestClassToStudentTable{
+    width:  100%;
+}
+
+.btn_center {
+    margin: auto;
+    display: block;
+}
+
+#rewardItemTable td:nth-child(1) {
+    width: 30%;
+}
+  
+#rewardItemTable td:nth-child(2) {
+  width: 30%;
+}
+  
+#rewardItemTable td:nth-child(3) {
+  width: 30%;
+}
+
+
+#rewardItemTable td {
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+#rewardItemTable th {
+  padding-right: 10px;
+}
+
+#interestClassItemTable td {
+    padding-right: 30px;
+    padding-top: 10px;
+  }
+  
+#interestClassItemTable th {
+    padding-right: 10px;
+}
+
+#student-select{
+  padding-left: 20px;
+}
+
+.vscomp-wrapper.has-error .vscomp-toggle-button{
+  border-color: #e74a3b !important;
+}
+
+.vscomp-wrapper.show-value-as-tags .vscomp-toggle-button {
+  border-color: #1cc88a ;
+}
+
+.checkInput{
+  border-color: #e74a3b;
+}
+
+.existInput{
+    border-color: #1cc88a;
+}
+
+.imageCard{
+  padding: 0 0;
+}
+
+#rewardItemTable td {
+  vertical-align: top;
+  height: 1px;
+  padding-bottom: 15px;
+}
+
+#interestClassItemTable td {
+    vertical-align: top;
+    height: 1px;
+    padding-bottom: 15px;
+  }
+
+input[type='file'] {
+    width: 120px;
+    color:transparent;  
+}
+

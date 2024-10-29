@@ -1,0 +1,35 @@
+.content .tab-content .dataTables_filter{
+    float: none;
+    text-align: none;
+    margin: 10px;
+}
+
+.content .tab-content .dataTables_filter label{
+    float: left;
+    text-align: none;
+}
+
+
+.addStudentsButton{
+    float: right;
+    text-align: right;
+}
+
+.form-group{
+    padding-bottom: 5px;
+}
+
+.btn-circle {
+    border-radius: 100%;
+    height: 2.5rem;
+    width: 2.5rem;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn_center {
+    margin: auto;
+    display: block;
+}

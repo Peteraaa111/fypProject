@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+
+  <!-- js -->
+  <script src="../js/scripts.js"></script>
+  <script src="../js/table.js"></script>
+  <script src="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.js"></script>
+  <!-- css  -->
+  <link href="../lib/DataTables/datatables.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="../css/manageStudents.css">
+  <script type="module" src="../js/User.js"></script>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-2 bg-dark text-light sidebar">
+        <div id="navigation"></div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="col-10 bgcolor">
+
+
+        <!-- cotent -->
+        <div class="content">
+          <h1>Manage Class Student</h1>
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" id="not-graduate-tab" data-bs-toggle="tab" href="#not-graduate">Not Graduate</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="graduate-tab" data-bs-toggle="tab" href="#graduate">Graduate</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="all-tab" data-bs-toggle="tab" href="#all">All</a>
+            </li>
+          </ul>
+          
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="not-graduate">
+              <table id="notGraduateStudentsTable" class="table table-striped table-bordered">
+                <!-- Table headers -->
+              </table>
+            </div>
+            <div class="tab-pane fade" id="graduate">
+              <table id="graduateStudentsTable" class="table table-striped table-bordered">
+                <!-- Table headers -->
+              </table>
+            </div>
+            <div class="tab-pane fade" id="all">
+              <table id="studentsTable" class="table table-striped table-bordered">
+                <!-- Table headers -->
+              </table>
+            </div>
+          </div>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Registration Modal -->
+  <div id="registrationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="registrationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registrationModalLabel">Add One Student</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="registrationStudentForm">
+            <div class="form-group">
+              <label for="s_EngName">English Name:</label>
+              <input type="text" class="form-control" id="s_EngName" name="s_EngName" required>
+            </div>
+            <div class="form-group">
+              <label for="s_ChiName">Chinese Name:</label>
+              <input type="text" class="form-control" id="s_ChiName" name="s_ChiName" required>
+            </div>
+            <div class="form-group">
+              <label>Gender:</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="s_Gender" id="s_Gender_Male" value="Male" required>
+                <label class="form-check-label" for="s_Gender_Male">
+                  Male
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="s_Gender" id="s_Gender_Female" value="Female">
+                <label class="form-check-label" for="s_Gender_Female">
+                  Female
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="s_Age">Age:</label>
+              <input type="number" class="form-control" id="s_Age" name="s_Age" required>
+            </div>
+            <div class="form-group">
+              <label for="s_Born">Born:</label>
+              <input type="text" class="form-control" id="s_Born" name="s_Born" required>
+            </div>
+            <div class="form-group">
+              <label for="s_idcardNumber">ID Card Number:</label>
+              <input type="text" class="form-control" id="s_idcardNumber" name="s_idcardNumber" required>
+            </div>
+            <div class="form-group">
+              <label for="parent_Name">Parent Name:</label>
+              <input type="text" class="form-control" id="parent_Name" name="parent_Name" required>
+            </div>
+            <div class="form-group">
+              <label for="parent_PhoneNumber">Parent Phone Number:</label>
+              <input type="text" class="form-control" id="parent_PhoneNumber" name="parent_PhoneNumber" required>
+            </div>
+            <div class="form-group">
+              <label for="home_address">Home Address:</label>
+              <input type="text" class="form-control" id="home_Address" name="home_Address" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="addOneStudent()">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addMultipleStudentsModal" tabindex="-1" aria-labelledby="addMultipleStudentsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addMultipleStudentsModalLabel">Add Multiple Students</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="studentFileInput" class="form-label">Upload a CSV file</label>
+              <input type="file" class="form-control" id="studentFileInput" accept=".csv">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="uploadFileButton" onclick="addMultipleStudents()">Upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <script>
+    // Fetch the navigation HTML file
+    document.addEventListener('DOMContentLoaded', function() {
+    // Fetch the navigation HTML file
+      fetch('navigation.html')
+        .then(response => response.text())
+        .then(html => {
+          // Inject the navigation HTML into the navigation element
+          document.getElementById('navigation').innerHTML = html;
+
+          // Select the elements with the class "arrow"
+          let arrows = document.querySelectorAll('.arrow');
+          // Add click event listener to toggle the menu
+          for (var i = 0; i < arrows.length; i++) {
+            arrows[i].addEventListener('click', (e) => {
+              let arrowParent = e.target.parentElement.parentElement; // Selecting the main parent of arrow
+              arrowParent.classList.toggle('showMenu');
+            });
+          }
+        });
+    });
+
+    const registrationModal = document.getElementById('registrationModal');
+
+    registrationModal.addEventListener('hidden.bs.modal', function (event) {
+      const form = document.getElementById('registrationStudentForm');
+      form.reset();
+    });
+
+    $(document).ready(function() {
+      fetchAndPopulateStudentsTable();
+      fetchStudent();
+      // Call the function to add the button
+      addStudentButtonToFilter();
+    });
+      
+  </script>
+</body>
+</html>

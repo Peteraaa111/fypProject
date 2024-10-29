@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+
+  <!-- js -->
+  <script src="../js/scripts.js"></script>
+  <script src="../js/viewLeaveForm.js"></script>
+  <script src="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.js"></script>
+  <!-- css  -->
+  <link href="../lib/DataTables/datatables.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.css">
+  <script type="module" src="../js/User.js"></script>
+  <link rel="stylesheet" href="../css/viewLeaveForm.css">
+
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-2 bg-dark text-light sidebar">
+        <div id="navigation"></div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="col-10 bgcolor">
+        <!-- Add your content here -->
+        <div class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <h1>Leave Form List</h1>
+            </div>
+
+            <div class="row">
+              <nav class="nav nav-tabs mb-3">
+                <a class="nav-link active" id="wait-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">Waiting for Approval</a>
+                <a class="nav-link" id="finished-tab" data-bs-toggle="tab" data-bs-target="#finished" type="button" role="tab" aria-controls="finished" aria-selected="false">Finished Approval</a>
+              </nav>
+
+              <div class="tab-content">
+                  <div class="tab-pane fade show active" id="all">
+                      <table id="waitApprovalTable" class="table table-striped table-bordered">
+                          <!-- Table headers -->
+                      </table>
+                  </div>
+                  <div class="tab-pane fade" id="finished">
+                      <table id="finishedApprovalTable" class="table table-striped table-bordered">
+                          <!-- Table headers -->
+                      </table>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+          
+                                      
+                            
+          <!-- <a class="nav-link active" id="reward-tab" data-bs-toggle="tab" data-bs-target="#reward" type="button" role="tab" aria-controls="reward" aria-selected="true">Student Reward</a> -->
+            
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // Fetch the navigation HTML file
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fetch the navigation HTML file
+      fetch('navigation.html')
+        .then(response => response.text())
+        .then(html => {
+          // Inject the navigation HTML into the navigation element
+          document.getElementById('navigation').innerHTML = html;
+
+          // Select the elements with the class "arrow"
+          let arrows = document.querySelectorAll('.arrow');
+          // Add click event listener to toggle the menu
+          for (var i = 0; i < arrows.length; i++) {
+            arrows[i].addEventListener('click', (e) => {
+              let arrowParent = e.target.parentElement.parentElement; // Selecting the main parent of arrow
+              arrowParent.classList.toggle('showMenu');
+            });
+          }
+        });
+    });
+
+    $(document).ready(function() {
+      initializeDataTable();
+      fetchData();
+    });
+  </script>
+</body>
+</html>

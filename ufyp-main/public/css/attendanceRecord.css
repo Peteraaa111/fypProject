@@ -1,0 +1,44 @@
+/* .academicYearSelector{
+    width: 25% !important;
+} */
+
+.attendanceTabs{
+    padding-left: 1px !important;
+    border-bottom: none;
+}
+
+.searchAttendanceRateDiv{
+    border: 1px solid;
+}
+
+.searchAttendanceChart{
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-left: 1px solid;
+}
+
+
+canvas{
+    width: 750px !important;
+    height: 350px !important;  
+}
+
+.datepicker-cell.prev,
+.datepicker-cell.next {
+  height: 0;
+  font-size: 0;
+}
+
+.whole-class-attendance-table{
+    border-collapse: separate; 
+    border-spacing: 1em;
+}
+
+.totalDaySetting{
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+.attendanceChart{
+    padding-right: 20px;
+}

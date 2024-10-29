@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <script src="../js/scripts.js"></script>
+  <link href="../lib/DataTables/datatables.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/replySlip.css">
+  <script src="../js/replySlip.js"></script>
+  <script type="module" src="../js/User.js"></script>
+  <!-- <script src="https://cdn.tiny.cloud/1/ykgez64w1kgqmu7igyqq0pbh5qphzuzoaewjhsvsorujuu6v/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> -->
+  <script src="../lib/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+  <!-- Font Awesome 5.15.4 -->
+  <link href="../lib/fontawesome-free-5.15.4-web/css/all.css" rel="stylesheet">
+  <script src="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="../lib/sweetalert2-11.7.11/package/dist/sweetalert2.min.css">
+
+  <link rel="stylesheet" href="../lib/virtual-select-master/tooltip.min.css" />
+  <link rel="stylesheet" href="../lib/virtual-select-master/dist/virtual-select.min.css">
+
+  <script src="../lib/virtual-select-master/dist/virtual-select.min.js"></script>
+  <script src="../lib/virtual-select-master/tooltip.min.js"></script>
+</head>
+
+<body>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-2 text-light sidebar">
+        <!-- <h2>Admin Panel</h2> -->
+        <div id="navigation">
+          
+        </div>
+      </div> 
+
+      <!-- Content Area -->
+      <div class="col-10 bgcolor">
+
+        <div class="content">
+          <!-- Academic Year Select Box -->
+          <div class="container-fluid">
+            <div class="row">
+              <h1>View ReplySlip</h1>
+            </div>
+            <div class="row yearSelectorDiv">
+              <div class="col">
+                <label for="yearSelector">Year:</label>
+                <select class="form-select" id="yearSelector">
+                  
+                </select>       
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col addReplySlipDiv">
+                <button class="btn btn-success btn-circle" id="addReplySlip" style="float: right;" data-bs-toggle="modal" data-bs-target="#replySlipModal" onclick="modalShow('add')" title="Add Reply Slip"><i class="fa fa-plus"></i> </button>
+              </div>
+            </div>
+
+            <div class="replySlipTableDiv" id="replySlipTableDiv">
+              <table id="replySlipTable" class="table table-striped">
+                <!-- Table headers -->
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="replySlipModal" tabindex="-1" aria-labelledby="replySlipModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="replySlipModalLabel">Reply Slip</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  <ul class="nav nav-tabs card-header-tabs" id="replySlipTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="tc-tab" data-bs-toggle="tab" data-bs-target="#tc" type="button" role="tab" aria-controls="tc" aria-selected="true">TC</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="en-tab" data-bs-toggle="tab" data-bs-target="#en" type="button" role="tab" aria-controls="en" aria-selected="false">EN</button>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-body">
+                  <div class="tab-content" id="replySlipTabsContent">
+                    <div class="tab-pane fade show active" id="tc" role="tabpanel" aria-labelledby="tc-tab">
+                      <form id="tcForm">
+                        <div class="form-group">
+                          <label for="titleTC">Title(TC)</label>
+                          <input type="text" class="form-control" id="titleTC" name="titleTC" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="contentTC">Main Content:</label>
+                          <textarea class="form-control" id="contentTC" name="contentTC" required></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="recipientTC">Recipient Content:</label>
+                          <textarea class="form-control" id="recipientTC" name="recipientTC" required></textarea>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="tab-pane fade" id="en" role="tabpanel" aria-labelledby="en-tab">
+                      <form id="enForm">
+                        <div class="form-group">
+                          <label for="titleEN">Title(EN)</label>
+                          <input type="text" class="form-control" id="titleEN" name="titleEN" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="contentEN">Main Content:</label>
+                          <textarea class="form-control" id="contentEN" name="contentEN" required></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="recipientEN">Recipient Content:</label>
+                          <textarea class="form-control" id="recipientEN" name="recipientEN" required></textarea>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="row payment" style="margin-top: 20px;">
+                      <div class="col">
+                        <input type="checkbox" id="paymentCheckbox" onclick="togglePaymentInput()">
+                        <label for="paymentCheckbox">Payment</label>
+                        <input type="number" id="paymentInput" style="display: none;" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button class="btn btn-primary" id="addReplySlipButton">Add Reply Slip</button>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+  <div class="modal fade" id="distributeReplySlipModal" tabindex="-1" aria-labelledby="distributeReplySlipModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="distributeReplySlipModalLabel">Distribute Reply Slip</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="distributionMethod-tab" data-bs-toggle="tab" data-bs-target="#distributionMethod" type="button" role="tab" aria-controls="distributionMethod" aria-selected="true">Distribution Method</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="distributionDetails-tab" data-bs-toggle="tab" data-bs-target="#distributionDetails" type="button" role="tab" aria-controls="details" aria-selected="false">Distribution Details</button>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-body">
+                  <div class="tab-content">
+                    <div class="tab-pane fade show active" id="distributionMethod" role="tabpanel" aria-labelledby="distributionMethod-tab">
+                      <form id="distributeReplySlipForm">
+                        <div class="form-group">
+                          <label for="distributionMethod" style="margin-right: 10px;">Distribution Method:</label>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="distributionMethod" id="selectAll" value="selectAll">
+                            <label class="form-check-label" for="selectAll">
+                              Select All
+                            </label>
+                          </div>
+                          <div class="form-check form-check-inline" >
+                            <input class="form-check-input" type="radio" name="distributionMethod" id="selectClass" value="selectClass">
+                            <label class="form-check-label" for="selectClass">
+                              Select Class
+                            </label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="distributionMethod" id="selectStudent" value="selectStudent">
+                            <label class="form-check-label" for="selectStudent">
+                              Select Student
+                            </label>
+                          </div>
+                        </div>
+          
+                        <div class="form-group classSelectDiv mt-2" id ="classSelectDiv">
+                          <label for="class-select">Select Class:</label>
+                          <div id="class-select">
+                         
+                          </div>
+                        </div>
+                        
+                            
+                        <div class="form-group studentSelectDiv mt-2" id ="studentSelectDiv">
+                          <label for="student-select">Select Student:</label>
+                          <div id="student-select">
+                         
+                          </div>
+                        </div>
+          
+                      </form>
+                    </div>
+
+                    <div class="tab-pane fade" id="distributionDetails" role="tabpanel" aria-labelledby="distributionDetails-tab">
+                      <div class="notDistribute" id="notDistribute">
+                        <p>The Reply Slip has not been distributed yet</p>
+                      </div>
+
+                      <div class="distributed" id="distributed">
+
+                        <div class="numberOfStudentReadReplySlip">
+
+                          <div class="topDiv">
+                            <span>Number of students who have read the reply slip</span>
+                            <span class="showDetail btn-link" style="float: right;" id="showDetailRead">Show Detail Table</span>
+                          </div>
+
+                          <div class="progress mt-1" role="progressbar" aria-label="Basic example" aria-valuemin="0" id="progressOfReadReplySlip">
+                            <div class="progress-bar" style="width: 100%" id="progressBarOfRead"></div>
+                          </div>
+
+                          <div class="word mt-2">
+                            <span class="front" id="readFront"></span>
+                            <span class="end" style="float: right;" id="readEnd"></span>
+                          </div>
+
+                          <div class="numberOfStudentReadReplySlipTableDiv mt-2" id="numberOfStudentReadReplySlipTableDiv">
+                            <table id="numberOfStudentReadReplySlipTable" class="table mb-2">
+                              <!-- Table headers -->
+                            </table>
+                          </div>
+
+                        </div>
+
+                        <div class="numberOfStudentSubmitReplySlip mt-3">
+                          <div class="topDiv">
+                            <span>Number of students who have submitted the reply slip</span>
+                            <span class="showDetail btn-link" style="float: right;" id="showDetailSubmit">Show Detail Table</span>
+                          </div>
+
+                          <div class="progress mt-1" role="progressbar" aria-label="Basic example2" aria-valuemin="0" id="progressOfSubmitReplySlip">
+                            <div class="progress-bar" style="width: 100%" id="progressBarOfSubmit"></div>
+                          </div>
+                        </div>
+
+                        <div class="word mt-2">
+                          <span class="front" id="submitFront"></span>
+                          <span class="end" style="float: right;" id="submitEnd"></span>
+                        </div>
+     
+                        <div class="numberOfStudentSubmitReplySlipTableDiv mt-2" id="numberOfStudentSubmitReplySlipTableDiv">
+                          <table id="numberOfStudentSubmitReplySlipTable" class="table mb-2">
+                            <!-- Table headers -->
+                          </table>
+                        </div>
+
+                      </div>
+                      
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer" id="distributeModalFooter">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="distributeReplySlipButton">Distribute</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fetch the navigation HTML file
+      fetch('navigation.html')
+        .then(response => response.text())
+        .then(html => {
+          // Inject the navigation HTML into the navigation element
+          document.getElementById('navigation').innerHTML = html;
+
+          // Select the elements with the class "arrow"
+          let arrows = document.querySelectorAll('.arrow');
+  
+          // Add click event listener to toggle the menu
+          for (var i = 0; i < arrows.length; i++) {
+            arrows[i].addEventListener('click', (e) => {
+              let arrowParent = e.target.parentElement.parentElement; // Selecting the main parent of arrow
+              arrowParent.classList.toggle('showMenu');
+            });
+          }
+        });
+    });
+
+    
+    $(document).ready(function() {
+      initializeDataTable();
+      populateYearSelector();
+      tinyInit();
+      resetReplySlipData();
+      initReplySlipDetail();
+      distributeReplySlipForm.reset();
+    });
+
+    const replySlipModal = document.getElementById('replySlipModal');
+    replySlipModal.addEventListener('hidden.bs.modal', () => {
+      resetReplySlipData();
+    });
+    
+    const distributeReplySlipForm = document.getElementById("distributeReplySlipForm");
+    const distributeReplySlipModal = document.getElementById('distributeReplySlipModal');
+    distributeReplySlipModal.addEventListener('hidden.bs.modal', () => {
+      distributeReplySlipForm.reset();
+    });
+
+    var distributionDetailsTab = document.getElementById('distributionDetails-tab');
+    var distributionMethodTab = document.getElementById('distributionMethod-tab');
+    var modalFooter = document.getElementById('distributeModalFooter');
+
+    distributionDetailsTab.addEventListener('shown.bs.tab', function (event) {
+      modalFooter.style.display = 'none';
+    });
+
+    distributionMethodTab.addEventListener('shown.bs.tab', function (event) {
+      modalFooter.style.display = 'flex';
+    });
+    
+
+  </script>
+  
+
+</body>
+
+</html>
